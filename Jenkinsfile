@@ -1,52 +1,16 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3'
-            args '-u root'
-        }
-    }
-    environment {
-        MONGO_DB_URL = 'mongodb://admin:Pacman111!@localhost:27017/web_scraper_db'
-        MONGO_DB_COLLECTION = 'web_scraper_collection'
-    }
+    agent none 
     stages {
-        stage('Build') {
-            steps {
-                // Clone the Git repository
-                git url: 'https://github.com/victordgr8t/web_scraper_app.git', branch: 'main'
-                // Install dependencies
-                sh 'pip3 install -r requirements.txt'
-                // Run the Python script to scrape data from the website
-                sh 'python3 web_scraper.py'
-            }
-        }
-        stage('Performance Test') {
-            steps {
-                script {
-                    def startTime = new Date().getTime()
-                    sh 'python3 web_scraper.py'
-                    def endTime = new Date().getTime()
-                    def duration = (endTime - startTime) / 1000.0
-                    echo "Web scraping took ${duration} seconds"
+        stage('Build') { 
+            agent {
+                docker {
+                    image 'python:2-alpine' 
                 }
             }
-        }
-        stage('Deploy') {
             steps {
-                // Add deployment steps here (e.g., copy data to a website or database)
-                sh 'mongo $MONGO_DB_URL --eval "db.$MONGO_DB_COLLECTION.find()"'
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
+                stash(name: 'compiled-results', includes: 'sources/*.py*') 
             }
-        }
-    }
-    post {
-        // Trigger another build if the pipeline fails
-        failure {
-            echo "Pipeline failed - sending email..."
-            mail to: 'sparkmindconcepts@gmail.com',
-                 subject: 'Pipeline failed Try again',
-                 body: 'The pipeline for the Python web scraper project failed. Please investigate.'
-            echo "Email sent"
-            build job: 'Python Web Scraper', wait: false
         }
     }
 }
