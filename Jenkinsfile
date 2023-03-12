@@ -1,26 +1,16 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.8'
-            args '-u root'
-        }
-    }
+    agent any
     environment {
         MONGO_DB_URL = 'mongodb://admin:Pacman111!@localhost:27017/web_scraper_db'
         MONGO_DB_COLLECTION = 'web_scraper_collection'
     }
     stages {
-        stage('Git Checkout') {
-            steps {
-                git branch: 'main', url: 'https://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@github.com/vicordgr8t/web_scraper_app.git'
-            }
-        }
         stage('Build') {
             steps {
                 // Clone the Git repository
                 git url: 'https://github.com/victordgr8t/web_scraper_app.git'
                 // Install dependencies
-                sh 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
                 // Run the Python script to scrape data from the website
                 sh 'python3 web_scraper.py'
             }
@@ -46,11 +36,12 @@ pipeline {
     post {
         // Trigger another build if the pipeline fails
         failure {
+            echo "Pipeline failed - sending email..."
             mail to: 'sparkmindconcepts@gmail.com',
                  subject: 'Pipeline failed',
                  body: 'The pipeline for the Python web scraper project failed. Please investigate.'
+            echo "Email sent"
             build job: 'Python Web Scraper', wait: false
         }
     }
 }
-
