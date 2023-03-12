@@ -8,8 +8,10 @@ pipeline {
         stage('Build') {
             steps {
                 // Clone the Git repository
-                git url: 'https://github.com/victordgr8t/web_scraper_app.git'
+                git url: 'https://github.com/victordgr8t/web_scraper_app.git', branch: 'main'
                 // Install dependencies
+                sh 'sudo apt-get update'
+                sh 'sudo apt-get install python3-pip -y'
                 sh 'pip3 install -r requirements.txt'
                 // Run the Python script to scrape data from the website
                 sh 'python3 web_scraper.py'
@@ -38,7 +40,7 @@ pipeline {
         failure {
             echo "Pipeline failed - sending email..."
             mail to: 'sparkmindconcepts@gmail.com',
-                 subject: 'Pipeline failed',
+                 subject: 'Pipeline failed Try again',
                  body: 'The pipeline for the Python web scraper project failed. Please investigate.'
             echo "Email sent"
             build job: 'Python Web Scraper', wait: false
