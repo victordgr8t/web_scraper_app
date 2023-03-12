@@ -10,8 +10,8 @@ pipeline {
                 // Clone the Git repository
                 git url: 'https://github.com/victordgr8t/web_scraper_app.git', branch: 'main'
                 // Install dependencies
-                sh 'apt-get update'
-                sh 'apt-get install -y python3-pip'
+                sh 'apt update'
+                sh 'apt install -y python3-pip'
                 sh 'pip3 install -r requirements.txt'
                 // Run the Python script to scrape data from the website
                 sh 'python3 web_scraper.py'
@@ -43,7 +43,4 @@ pipeline {
                  subject: 'Pipeline failed Try again',
                  body: 'The pipeline for the Python web scraper project failed. Please investigate.'
             echo "Email sent"
-            build job: 'Python Web Scraper', wait: false
-        }
-    }
-}
+            build job: 'Python Web Scraper', wait
