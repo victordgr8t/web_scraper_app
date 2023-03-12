@@ -1,16 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.8'
+            args '-u root'
+        }
+    }
     environment {
         MONGO_DB_URL = 'mongodb://admin:Pacman111!@localhost:27017/web_scraper_db'
         MONGO_DB_COLLECTION = 'web_scraper_collection'
     }
-    stage ('Git Checkout') {
-        steps {
-            git branch: 'main', url: 'https://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@github.com/vicordgr8t/web_scraper_app.git'
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', url: 'https://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@github.com/vicordgr8t/web_scraper_app.git'
             }
         }
-
-    stages {
         stage('Build') {
             steps {
                 // Clone the Git repository
@@ -49,3 +53,4 @@ pipeline {
         }
     }
 }
+
