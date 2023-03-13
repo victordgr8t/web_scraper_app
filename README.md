@@ -18,7 +18,7 @@ To set up MongoDB and Mongo Express using Docker, we need to follow these steps:
 
  First, we need to pull the MongoDB and Mongo Express images from Docker Hub. We can do this by running the following command in our terminal:
  
- ```
+ ```sh
     docker pull mongo
     docker pull mongo-express
  ```
@@ -31,8 +31,8 @@ To set up MongoDB and Mongo Express using Docker, we need to follow these steps:
     docker run -d --name mongodb --network mongo-network -p 27017:27017 mongo
     docker run -d -p 8081:8081 \
     -e ME_CONFIG_MONGODB_SERVER=mongodb \
-    -e ME_CONFIG_BASICAUTH_USERNAME=admin \
-    -e ME_CONFIG_BASICAUTH_PASSWORD=Password123! \
+    -e ME_CONFIG_BASICAUTH_USERNAME=User1 \
+    -e ME_CONFIG_BASICAUTH_PASSWORD=1234567890 \
     --name mongo-express mongo-express
 
  ```
