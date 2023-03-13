@@ -88,7 +88,7 @@ Now that we have set up our MongoDB and Mongo Express containers, we can use the
 
 Conclusion
 
-In this blog post, we have learned how to set up MongoDB and Mongo Express using Docker and use them for web scraping with Python. With these tools, we can easily create web scrapers and store the data in our MongoDB databases. This is a powerful combination that can be used for a variety of use cases
+In this blog post, we have learned how to set up MongoDB and Mongo Express using Docker and use them for web scraping with Python. With these tools, we can easily create web scrapers and store the data in our MongoDB databases. This is a powerful combination that can be used for a variety of use cases.
 
 You can get detailed explanation on my blog [Hasnode.dev](https://vicmode.hashnode.dev/webscrapping-using-beautifulsoup)
 
