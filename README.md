@@ -25,7 +25,7 @@ To set up MongoDB and Mongo Express using Docker, we need to follow these steps:
  
  Once the images are downloaded, we can start our MongoDB and Mongo Express containers using the following commands:
  
- ```
+ ```sh
     docker network create mongo-network
     docker network ls
     docker run -d --name mongodb --network mongo-network -p 27017:27017 mongo
@@ -46,7 +46,7 @@ Once our containers are up and running, we can access our Mongo Express dashboar
 
 Now that we have set up our MongoDB and Mongo Express containers, we can use them for web scraping with Python. Here's an example Python code to scrape a website and store the data in our MongoDB database:
 
-```
+```python
     import requests
     from bs4 import BeautifulSoup
     from pymongo import MongoClient
