@@ -1,4 +1,4 @@
-# web_scraper_app
+# Web Scraper APP
 
 # Setting up MongoDB and Mongo Express using Docker and using it for Web Scraping with Python
 
@@ -21,13 +21,20 @@ To set up MongoDB and Mongo Express using Docker, we need to follow these steps:
  ```
     docker pull mongo
     docker pull mongo-express
-
  ```
  
  Once the images are downloaded, we can start our MongoDB and Mongo Express containers using the following commands:
  
  ```
- 
+    docker network create mongo-network
+    docker network ls
+    docker run -d --name mongodb --network mongo-network -p 27017:27017 mongo
+    docker run -d -p 8081:8081 \
+    -e ME_CONFIG_MONGODB_SERVER=mongodb \
+    -e ME_CONFIG_BASICAUTH_USERNAME=admin \
+    -e ME_CONFIG_BASICAUTH_PASSWORD=Password123! \
+    --name mongo-express mongo-express
+
  ```
  
  Here, we are running two containers - one for MongoDB and one for Mongo Express. The --name flag is used to specify the name of the container, and the -d flag is used to run the container in the background. The --link flag is used to link our Mongo Express container to our MongoDB container, so that it can access the database.
@@ -83,5 +90,5 @@ Conclusion
 
 In this blog post, we have learned how to set up MongoDB and Mongo Express using Docker and use them for web scraping with Python. With these tools, we can easily create web scrapers and store the data in our MongoDB databases. This is a powerful combination that can be used for a variety of use cases
 
-You can get detailed explanation on my blog https://vicmode.hashnode.dev/webscrapping-using-beautifulsoup
+You can get detailed explanation on my blog [Hasnode.dev](https://vicmode.hashnode.dev/webscrapping-using-beautifulsoup)
 
